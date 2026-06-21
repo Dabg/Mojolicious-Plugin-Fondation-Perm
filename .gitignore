@@ -1,0 +1,4 @@
+/.build/
+*.bak
+/Mojolicious-Plugin-*-*/
+/*.tar.gz
