@@ -27,10 +27,4 @@ __PACKAGE__->belongs_to(
     'perm_id',
 );
 
-__PACKAGE__->belongs_to(
-    'group',
-    'Mojolicious::Plugin::Fondation::Group::Schema::Result::Group',
-    'group_id',
-);
-
 1;

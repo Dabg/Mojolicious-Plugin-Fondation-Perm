@@ -35,8 +35,33 @@ sub register ($self, $app, $conf) {
 sub fondation_finalyze ($self, $app, $long_name) {
     my $registry = $app->fondation->registry;
 
-    # Only establish perm↔group relation if Group plugin is loaded
+    # Only establish group↔perm relation if Group plugin is loaded
     if ($registry->{'Mojolicious::Plugin::Fondation::Group'}) {
+        # Underlying has_many / belongs_to
+        Mojolicious::Plugin::Fondation::Group::Schema::Result::Group->has_many(
+            'group_perm',
+            'Mojolicious::Plugin::Fondation::Perm::Schema::Result::GroupPerm',
+            'group_id',
+        );
+        Mojolicious::Plugin::Fondation::Perm::Schema::Result::GroupPerm->belongs_to(
+            'group',
+            'Mojolicious::Plugin::Fondation::Group::Schema::Result::Group',
+            { 'foreign.id' => 'self.group_id' },
+        );
+
+        # Re-register sources so the schema clones pick up the new relationships
+        my $c = $app->build_controller;
+        if ($c->has_helper('schema_class')) {
+            my $sc = $c->schema_class;
+            eval {
+                $sc->register_source('Group',
+                    Mojolicious::Plugin::Fondation::Group::Schema::Result::Group->result_source_instance);
+                $sc->register_source('GroupPerm',
+                    Mojolicious::Plugin::Fondation::Perm::Schema::Result::GroupPerm->result_source_instance);
+                1;
+            } or $app->log->warn("[$long_name] Failed to re-register sources: $@");
+        }
+
         many_to_many_async('Mojolicious::Plugin::Fondation::Perm::Schema::Result::Perm',  'groups', 'group_perm', 'group');
         many_to_many_async('Mojolicious::Plugin::Fondation::Group::Schema::Result::Group', 'perms',  'group_perm', 'perm');
     }
