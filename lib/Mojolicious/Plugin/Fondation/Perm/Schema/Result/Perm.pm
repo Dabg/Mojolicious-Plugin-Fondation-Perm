@@ -14,7 +14,7 @@ __PACKAGE__->table('perms');
 __PACKAGE__->add_columns(
     id => { data_type => 'integer', is_auto_increment => 1, is_nullable => 0 },
 
-    code => {
+    name => {
         data_type   => 'varchar',
         size        => 255,
         is_nullable => 0,

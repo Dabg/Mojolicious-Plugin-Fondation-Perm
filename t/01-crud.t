@@ -55,20 +55,20 @@ isa_ok($rs, 'DBIx::Class::Async::ResultSet', 'model helper returns ResultSet');
 
 # Create
 my $created = $schema->await($rs->create({
-    code        => 'admin',
+    name        => 'admin',
     description => 'Full access',
 }));
 ok($created->id, 'create works');
-is($created->code,        'admin',       'create sets code');
+is($created->name,        'admin',       'create sets name');
 is($created->description, 'Full access', 'create sets description');
 
 # Read (find)
 my $found = $schema->await($rs->find($created->id));
-is($found->code,        'admin',       'find returns correct perm');
+is($found->name,        'admin',       'find returns correct perm');
 is($found->description, 'Full access', 'find returns description');
 
 # Search
-my $results = $schema->await($rs->search({ code => 'admin' })->all);
+my $results = $schema->await($rs->search({ name => 'admin' })->all);
 is(scalar @$results, 1, 'search finds one');
 
 # Update
@@ -88,7 +88,7 @@ isa_ok($gp_rs, 'DBIx::Class::Async::ResultSet', 'group_perm model helper returns
 
 # Create a perm first, then link it
 my $perm = $schema->await($rs->create({
-    code        => 'read',
+    name        => 'read',
     description => 'Read access',
 }));
 

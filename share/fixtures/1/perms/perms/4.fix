@@ -1,5 +1,5 @@
 $HASH1 = {
-           code        => 'delete',
+           name        => 'delete',
            created_at  => '2026-06-15T00:00:04',
            description => 'Delete access',
            id          => 4,
