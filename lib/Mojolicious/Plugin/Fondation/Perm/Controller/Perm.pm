@@ -49,7 +49,7 @@ sub create ($self) {
         $self->notify_user({
             type  => 'info',
             title => $self->l('Permission created'),
-            body  => sprintf($self->l("Permission '%s' has been created."), $d->{code} // ''),
+            body  => sprintf($self->l("Permission '%s' has been created."), $d->{name} // ''),
         });
     })->on_fail(sub { $self->_render_error(shift) })->retain;
 }
@@ -77,7 +77,7 @@ sub update ($self) {
             $self->notify_user({
                 type  => 'info',
                 title => $self->l('Permission updated'),
-                body  => sprintf($self->l("Permission '%s' has been updated."), $d->{code} // ''),
+                body  => sprintf($self->l("Permission '%s' has been updated."), $d->{name} // ''),
             });
         })->on_fail(sub { $self->_render_error(shift) })->retain;
     })->on_fail(sub { $self->_render_error(shift) })->retain;
@@ -95,14 +95,14 @@ sub delete ($self) {
                 { errors => [{ message => 'Not found', path => '/' }] });
             return;
         }
-        my $code = $perm->code;
+        my $name = $perm->name;
         $perm->delete->on_done(sub {
             $self->render(status => 204, openapi => {});
 
             $self->notify_user({
                 type  => 'warning',
                 title => $self->l('Permission deleted'),
-                body  => sprintf($self->l("Permission '%s' has been deleted."), $code // ''),
+                body  => sprintf($self->l("Permission '%s' has been deleted."), $name // ''),
             });
         })->on_fail(sub { $self->_render_error(shift) })->retain;
     })->on_fail(sub { $self->_render_error(shift) })->retain;
