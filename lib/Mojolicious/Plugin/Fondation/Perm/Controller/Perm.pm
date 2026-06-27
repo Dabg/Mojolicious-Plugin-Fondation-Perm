@@ -8,6 +8,11 @@ use Mojo::Base 'Mojolicious::Plugin::Fondation::Controller::Base', -signatures;
 # CRUD — permissions
 # ---------------------------------------------------------------------------
 
+# Render the HTML page (no DB query — datatable loads via AJAX)
+sub index ($self) {
+    $self->render(template => 'perm/list');
+}
+
 # List all permissions (GET /api/Perm)
 sub list ($self) {
     $self->render_later;
