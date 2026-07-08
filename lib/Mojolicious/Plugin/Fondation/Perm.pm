@@ -49,19 +49,6 @@ sub fondation_finalyze ($self, $app, $long_name) {
             { 'foreign.id' => 'self.group_id' },
         );
 
-        # Re-register sources so the schema clones pick up the new relationships
-        my $c = $app->build_controller;
-        if ($c->has_helper('schema_class')) {
-            my $sc = $c->schema_class;
-            eval {
-                $sc->register_source('Group',
-                    Mojolicious::Plugin::Fondation::Group::Schema::Result::Group->result_source_instance);
-                $sc->register_source('GroupPerm',
-                    Mojolicious::Plugin::Fondation::Perm::Schema::Result::GroupPerm->result_source_instance);
-                1;
-            } or $app->log->warn("[$long_name] Failed to re-register sources: $@");
-        }
-
         many_to_many_async('Mojolicious::Plugin::Fondation::Perm::Schema::Result::Perm',  'groups', 'group_perm', 'group');
         many_to_many_async('Mojolicious::Plugin::Fondation::Group::Schema::Result::Group', 'perms',  'group_perm', 'perm');
     }
