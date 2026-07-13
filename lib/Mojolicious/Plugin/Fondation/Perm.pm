@@ -4,8 +4,6 @@ use DBIx::Class::Relationship::ManyToMany::Async;
 
 # ABSTRACT: Permission management plugin for Fondation
 
-our $VERSION = '0.01';
-
 sub fondation_meta {
     return {
         dependencies => [
