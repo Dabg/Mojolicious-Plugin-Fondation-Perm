@@ -1,6 +1,7 @@
 Revision history for Mojolicious-Plugin-Fondation-Perm
 
 {{$NEXT}}
+          - removes unnecessary fixtures
 
 0.01      2026-07-15 18:07:05+02:00 Europe/Paris
           - Initial release
