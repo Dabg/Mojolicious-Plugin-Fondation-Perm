@@ -5,7 +5,7 @@ package Mojolicious::Plugin::Fondation::Perm::Schema::Result::Perm;
 use strict;
 use warnings;
 
-use base 'DBIx::Class::Core';
+use base 'Mojolicious::Plugin::Fondation::Schema::Result::Base';
 
 __PACKAGE__->load_components(qw/TimeStamp Core/);
 
