@@ -1,6 +1,8 @@
 Revision history for Mojolicious-Plugin-Fondation-Perm
 
 {{$NEXT}}
+
+0.04      2026-08-07 20:53:25+02:00 Europe/Paris
     - requires Fondation::Model::DBIx::Async 0.06
 
 0.03      2026-08-06 23:42:08+02:00 Europe/Paris
